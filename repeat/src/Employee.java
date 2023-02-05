@@ -32,4 +32,7 @@ public class Employee extends Human implements Comparable<Employee> {
         }
     }
 
+	public float getSalary() {
+		return salary;
+	}
 }
