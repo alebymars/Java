@@ -1,6 +1,6 @@
-import java.lang.Comparable;
+// import java.lang.Comparable;
 
-public class Employee extends Human implements Comparable<Employee> {
+public class Employee extends Human {
     String division;
     String post;
     float salary;
@@ -12,24 +12,27 @@ public class Employee extends Human implements Comparable<Employee> {
         this.salary = salary;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Employee{");
-        sb.append("division='").append(division).append('\'');
-        sb.append(", post='").append(post).append('\'');
-        sb.append(", salary=").append(salary);
-        sb.append('}');
-        return sb.toString();
+    public Employee() {
     }
 
-    public int compareTo(Employee anotherEmployee) {
-        if (this.salary > anotherEmployee.salary) {
-            return 1;
-        } else if (this.salary < anotherEmployee.salary) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
+    // @Override
+    // public String toString() {
+    //     final StringBuilder sb = new StringBuilder("Employee{");
+    //     sb.append("division='").append(division).append('\'');
+    //     sb.append(", post='").append(post).append('\'');
+    //     sb.append(", salary=").append(salary);
+    //     sb.append('}');
+    //     return sb.toString();
+    // }
+
+    // public int compareTo(Employee anotherEmployee) {
+    //     if (this.salary > anotherEmployee.salary) {
+    //         return 1;
+    //     } else if (this.salary < anotherEmployee.salary) {
+    //         return -1;
+    //     } else {
+    //         return 0;
+    //     }
+    // }
 
 }
