@@ -1,10 +1,11 @@
 import java.util.TreeSet;
 import java.io.*;
-import java.lang.*;
+// import java.lang.*;
 import java.util.*;
 
 public class Main {
     public static TreeSet<Employee> myEmployeeArrayList = new TreeSet<Employee>();
+    static Map<Integer, String> map = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
 
@@ -20,9 +21,10 @@ public class Main {
         firstClient.sex = "Man";
         firstClient.setListOrders(new Order[2]);
         firstClient.getListOrders()[0] = new Order();
-        firstClient.getListOrders()[0].items = new Product[2];
+        firstClient.getListOrders()[0].items = new Product[3];
         firstClient.getListOrders()[0].items[0] = new Product("Bread", "15.02.2022", 1);
         firstClient.getListOrders()[0].items[1] = new Product("Milk", "15.02.2022", 2);
+        firstClient.getListOrders()[0].items[2] = new Product("Butter", "15.02.2022", 3);
         firstClient.getListOrders()[1] = new Order();
         firstClient.getListOrders()[1].items = new Product[1];
         firstClient.getListOrders()[1].items[0] = new Product("Milk", "15.02.2022", 1);
@@ -37,7 +39,7 @@ public class Main {
         secondClient.getListOrders()[0].items[0] = new Product("Milk", "15.02.2022", 1);
 
         String[] popularProduct = new String[firstClient.getListOrders().length];
-        String[] popularProduct2 = new String[secondClient.getListOrders().length];
+        // String[] popularProduct2 = new String[secondClient.getListOrders().length];
 
         System.out.println("First client: " + firstClient.firstName + " " + firstClient.lastName + ", Orders:");
         for (int i = 0; i < firstClient.getListOrders().length; i++) {
@@ -46,31 +48,33 @@ public class Main {
                 // String[] arrOrder = new String[firstClient.getListOrders().length];
                 arrOrder[i] = firstClient.getListOrders()[i].items[j].name;
                 System.out.println("order #" + (i + 1) + " " + arrOrder[i]);
-                popularProduct[j] = arrOrder[i];
+                popularProduct[i] = arrOrder[i];
             }
-            popularProduct2[i] = arrOrder[i];
+            map.put(i, arrOrder[i]);
+            // System.out.println("map: " + map);
+            // popularProduct2[i] = arrOrder[i];
         }
 
-        System.out.println("popularProduct: " + Arrays.toString(popularProduct));
-        System.out.println("popularProduct2: " + Arrays.toString(popularProduct2));
+        // System.out.println("popularProduct: " + Arrays.toString(popularProduct));
+        // System.out.println("popularProduct2: " + Arrays.toString(popularProduct2));
 
-        String[] copyArray = Arrays.copyOf(popularProduct, popularProduct.length);
-        System.out.println("copyArray: " + Arrays.toString(copyArray));
+        // String[] copyArray = Arrays.copyOf(popularProduct, popularProduct.length);
+        // System.out.println("copyArray: " + Arrays.toString(copyArray));
 
-        String[] allArray = Arrays.copyOf(copyArray, copyArray.length);
-        System.out.println("allArray: " + Arrays.toString(allArray));
+        // String[] allArray = Arrays.copyOf(copyArray, copyArray.length);
+        // System.out.println("allArray: " + Arrays.toString(allArray));
 
         // var s = Arrays.asList(popularProduct);
         // System.out.println(s);
 
-        // System.out.println("\nSecond client: " + secondClient.firstName + " " + secondClient.lastName + ", Orders:");
-        // for (int i = 0; i < secondClient.getListOrders().length; i++) {
-        //     for (int j = 0; j < secondClient.getListOrders()[i].items.length; j++) {
-        //         String[] arrOrder = new String[secondClient.getListOrders().length];
-        //         arrOrder[i] = secondClient.getListOrders()[i].items[j].name;
-        //         System.out.println("order #" + (i + 1) + " " + arrOrder[i]);
-        //     }
-        // }
+        System.out.println("\nSecond client: " + secondClient.firstName + " " + secondClient.lastName + ", Orders:");
+        for (int i = 0; i < secondClient.getListOrders().length; i++) {
+            for (int j = 0; j < secondClient.getListOrders()[i].items.length; j++) {
+                String[] arrOrder = new String[secondClient.getListOrders().length];
+                arrOrder[i] = secondClient.getListOrders()[i].items[j].name;
+                System.out.println("order #" + (i + 1) + " " + arrOrder[i]);
+            }
+        }
 
         System.out.println(
                 "\nNumber of all orders: "
@@ -79,7 +83,7 @@ public class Main {
         System.out.println("Number of all products: " + (firstClient.getListOrders()[0].items.length
                 + firstClient.getListOrders()[1].items.length + secondClient.getListOrders()[0].items.length));
 
-        System.out.println("Popular product: " + popularProduct[0]);
+        System.out.println("Popular product: " + popularProduct[1]);
     }
 
     public static void addEmployee() {
