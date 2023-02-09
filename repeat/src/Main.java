@@ -1,4 +1,6 @@
-import java.util.TreeSet;
+
+// import java.util.stream.Collectors;
+// import java.util.stream.Stream;
 import java.io.*;
 // import java.lang.*;
 import java.util.*;
@@ -10,24 +12,28 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         addOrderClient();
+        writeToTxt();
         // addEmployee();
         // addOrder();
     }
 
     public static void addOrderClient() {
+        List popular = new ArrayList();
+
         Client firstClient = new Client();
         firstClient.firstName = "Ivan";
         firstClient.lastName = "Ivanov";
         firstClient.sex = "Man";
         firstClient.setListOrders(new Order[2]);
         firstClient.getListOrders()[0] = new Order();
-        firstClient.getListOrders()[0].items = new Product[3];
-        firstClient.getListOrders()[0].items[0] = new Product("Bread", "15.02.2022", 1);
-        firstClient.getListOrders()[0].items[1] = new Product("Milk", "15.02.2022", 2);
-        firstClient.getListOrders()[0].items[2] = new Product("Butter", "15.02.2022", 3);
+        firstClient.getListOrders()[0].items = new Product[4];
+        firstClient.getListOrders()[0].items[0] = new Product("Lemon", "15.02.2022", 1);
+        firstClient.getListOrders()[0].items[1] = new Product("Butter", "15.02.2022", 2);
+        firstClient.getListOrders()[0].items[2] = new Product("Bread", "15.02.2022", 3);
+        firstClient.getListOrders()[0].items[3] = new Product("Milk", "15.02.2022", 4);
         firstClient.getListOrders()[1] = new Order();
         firstClient.getListOrders()[1].items = new Product[1];
-        firstClient.getListOrders()[1].items[0] = new Product("Milk", "15.02.2022", 1);
+        firstClient.getListOrders()[1].items[0] = new Product("Butter", "15.02.2022", 1);
 
         Client secondClient = new Client();
         secondClient.firstName = "Petr";
@@ -36,44 +42,45 @@ public class Main {
         secondClient.setListOrders(new Order[1]);
         secondClient.getListOrders()[0] = new Order();
         secondClient.getListOrders()[0].items = new Product[1];
-        secondClient.getListOrders()[0].items[0] = new Product("Milk", "15.02.2022", 1);
+        secondClient.getListOrders()[0].items[0] = new Product("Butter", "15.02.2022", 1);
 
         String[] popularProduct = new String[firstClient.getListOrders().length];
-        // String[] popularProduct2 = new String[secondClient.getListOrders().length];
 
         System.out.println("First client: " + firstClient.firstName + " " + firstClient.lastName + ", Orders:");
         for (int i = 0; i < firstClient.getListOrders().length; i++) {
             String[] arrOrder = new String[firstClient.getListOrders().length];
             for (int j = 0; j < firstClient.getListOrders()[i].items.length; j++) {
-                // String[] arrOrder = new String[firstClient.getListOrders().length];
                 arrOrder[i] = firstClient.getListOrders()[i].items[j].name;
                 System.out.println("order #" + (i + 1) + " " + arrOrder[i]);
                 popularProduct[i] = arrOrder[i];
+                popular.add(arrOrder[i]);
+                if (map.containsKey(i)) {
+                } else {
+                    map.put(i, arrOrder[i]);
+                    // System.out.println("map: " + map);
+                }
             }
             map.put(i, arrOrder[i]);
-            // System.out.println("map: " + map);
-            // popularProduct2[i] = arrOrder[i];
         }
-
-        // System.out.println("popularProduct: " + Arrays.toString(popularProduct));
-        // System.out.println("popularProduct2: " + Arrays.toString(popularProduct2));
-
-        // String[] copyArray = Arrays.copyOf(popularProduct, popularProduct.length);
-        // System.out.println("copyArray: " + Arrays.toString(copyArray));
-
-        // String[] allArray = Arrays.copyOf(copyArray, copyArray.length);
-        // System.out.println("allArray: " + Arrays.toString(allArray));
-
-        // var s = Arrays.asList(popularProduct);
-        // System.out.println(s);
+        // System.out.println("Popular Item: " + map);
+        // System.out.println("All Item: " + popular);
 
         System.out.println("\nSecond client: " + secondClient.firstName + " " + secondClient.lastName + ", Orders:");
         for (int i = 0; i < secondClient.getListOrders().length; i++) {
+            String[] arrOrder = new String[secondClient.getListOrders().length];
             for (int j = 0; j < secondClient.getListOrders()[i].items.length; j++) {
-                String[] arrOrder = new String[secondClient.getListOrders().length];
+                // String[] arrOrder = new String[secondClient.getListOrders().length];
                 arrOrder[i] = secondClient.getListOrders()[i].items[j].name;
                 System.out.println("order #" + (i + 1) + " " + arrOrder[i]);
+                popularProduct[i] = arrOrder[i];
+                popular.add(arrOrder[i]);
+                if (map.containsKey(i)) {
+                } else {
+                    map.put(i, arrOrder[i]);
+                    // System.out.println("map: " + map);
+                }
             }
+            map.put(i, arrOrder[i]);
         }
 
         System.out.println(
@@ -83,7 +90,46 @@ public class Main {
         System.out.println("Number of all products: " + (firstClient.getListOrders()[0].items.length
                 + firstClient.getListOrders()[1].items.length + secondClient.getListOrders()[0].items.length));
 
-        System.out.println("Popular product: " + popularProduct[1]);
+        System.out.println("\nAll products: " + popular);
+        System.out.println("Popular: " + getPopularElement(popular));
+    }
+
+    private static String getPopularElement(List popular) {
+        String popularElement = null;
+        int count = 0;
+        for (int i = 0; i < popular.size(); i++) {
+            String temp = (String) popular.get(i);
+            int tempCount = 0;
+            for (int j = 0; j < popular.size(); j++) {
+                if (temp.equals(popular.get(j))) {
+                    tempCount++;
+                }
+            }
+            if (tempCount > count) {
+                popularElement = temp;
+                count = tempCount;
+            }
+        }
+        return popularElement;
+    }
+
+    public int getPopularElement(int[] a) {
+        int count = 1, tempCount;
+        int popular = a[0];
+        int temp = 0;
+        for (int i = 0; i < (a.length - 1); i++) {
+            temp = a[i];
+            tempCount = 0;
+            for (int j = 1; j < a.length; j++) {
+                if (temp == a[j])
+                    tempCount++;
+            }
+            if (tempCount > count) {
+                popular = temp;
+                count = tempCount;
+            }
+        }
+        return popular;
     }
 
     public static void addEmployee() {
@@ -147,19 +193,20 @@ public class Main {
         System.out.println("Total salary: " + sum);
     }
 
-    // public static void writeToTxt() {
-    // try (FileWriter writer = new FileWriter("order.txt", false)) {
-    // // запись всей строки
-    // String text = "Hello Gold!";
-    // writer.write(text);
-    // // запись по символам
-    // writer.append('\n');
-    // writer.append('E');
+    public static void writeToTxt() {
+        try (FileWriter writer = new FileWriter("order.txt", false)) {
+            // запись всей строки
+            String text = "Hello Gold!";
+            writer.write(text);
+            // запись по символам
+            writer.append('\n');
+            writer.append('E');
 
-    // writer.flush();
-    // } catch (IOException ex) {
+            writer.flush();
+        } catch (IOException ex) {
 
-    // System.out.println(ex.getMessage());
-    // }
-    // }
+            System.out.println(ex.getMessage());
+        }
+    }
+
 }
