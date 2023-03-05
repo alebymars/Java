@@ -194,13 +194,15 @@ public class Main {
     }
 
     public static void writeToTxt() {
-        try (FileWriter writer = new FileWriter("order.txt", false)) {
+        try (FileWriter writer = new FileWriter("order.txt", true)) {
+            // add all orders to .txt file
+            writer.write(myEmployeeArrayList.toString());
             // запись всей строки
-            String text = "Hello Gold!";
-            writer.write(text);
-            // запись по символам
-            writer.append('\n');
-            writer.append('E');
+            // String text = "Hello Gold!";
+            // writer.write(text);
+            // // запись по символам
+            // writer.append('\n');
+            // writer.append('E');
 
             writer.flush();
         } catch (IOException ex) {
